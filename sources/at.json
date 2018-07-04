@@ -1,6 +1,6 @@
 [
     {
-        "url": null,
+        "url": "http://discomap.eea.europa.eu/map/fme/latest/",
         "adapter": "eea-direct",
         "name": "EEA Austria",
         "city": "",
@@ -10,6 +10,6 @@
         "contacts": [
             "info@openaq.org"
         ],
-        "active": true
+        "active": false
     }
 ]
