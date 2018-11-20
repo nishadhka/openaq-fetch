@@ -51,9 +51,9 @@ export async function fetchStream (source) {
               station_id: site['station_id'],
               station_name: site['station_name'],
               coords: {latitude: Number(site['latitude']), longitude: Number(site['longitude'])}
-        }
+        });
 
-      },
+      }},
       new DataStream()
     )
     .into(
