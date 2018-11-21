@@ -44,22 +44,22 @@ export async function fetchStream (source) {
       (siteStream, site) => {
         // At this point, check to make sure the parameters were last updated
         // within the last 35 minutes
-        var fromDate = moment.tz(site['parameter_latest_update_date'], 'YYYY-MM-DD HH:mm:ss', 'Asia/Kolkata');
-        var minuteDiff = moment(Math.floor(Date.now() / 6e5) * 6e5).utc().diff(fromDate.toDate(), 'minutes');
-        if (minuteDiff < 0 || minuteDiff > 35) {
+        //var fromDate = moment.tz(site['parameter_latest_update_date'], 'YYYY-MM-DD HH:mm:ss', 'Asia/Kolkata');
+        //var minuteDiff = moment(Math.floor(Date.now() / 6e5) * 6e5).utc().diff(fromDate.toDate(), 'minutes');
+        //if (minuteDiff < 0 || minuteDiff > 35) {
           return siteStream.whenWrote({
               station_id: site['station_id'],
               station_name: site['station_name'],
               coords: {latitude: Number(site['latitude']), longitude: Number(site['longitude'])}
         });
 
-      }},
+      },
       new DataStream()
     )
     .into(
       async (measurements, {coords, station_id: stationId}) => {
         const options = Object.assign(requestOptions, {
-          url: 'https://app.cpcbccr.com/caaqms/caaqms_view_data_v2',
+          url: 'https://app.cpcbccr.com/caaqms/caaqms_viewdata_v2',
           body: Buffer.from(`{"site_id":"${stationId}"}`).toString('base64'),
           resolveWithFullResponse: true
         });
@@ -73,7 +73,7 @@ export async function fetchStream (source) {
               .from(bodyContent)
               .each(async p => {
                 let parameter = p.parameters.toLowerCase().replace('.', '');
-                parameter = (parameter === 'ozone') ? 'o3' : parameter;
+                parameter = (parameter === 'oone') ? 'o3' : parameter;
 
                 // Make sure we want the pollutant
                 if (!acceptableParameters.includes(parameter)) {
